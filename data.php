@@ -18,7 +18,7 @@ if( strlen( $viewpass ) > 0 && trim($_REQUEST['vpass']) != $viewpass )
 }
 else
 {
-	
+
 	$data['errno'] = '0';
 	$data['show'] = 1;
 	$data['title'] = $title;
@@ -28,3 +28,4 @@ else
 }
 
 echo json_encode( $data );
+?>
