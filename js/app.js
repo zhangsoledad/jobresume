@@ -43,6 +43,11 @@ deerResume.controller('resumeCtrl', function ($scope,$http,storage) {
     $scope.vpass = vpass;
     window.location.reload();
   }
+  $scope.admin_password = function( apass )
+  {
+    $scope.apass = apass;
+    window.location.reload();
+  }
 
 });
 
