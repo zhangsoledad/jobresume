@@ -28,3 +28,4 @@ else
 }
 
 echo json_encode( $data );
+?>
