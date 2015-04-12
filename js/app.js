@@ -1,7 +1,7 @@
 var deerResume = angular.module('deerResume', ['ngRoute','wiz.markdown','ngNotify','angularLocalStorage']);
 
-//var baseurl = 'http://cvbox.sinaapp.com/'; // 使用SAE托管简历数据
-var baseurl = 'data.php'; // 使用本地文件托管简历数据，本地模式下，不支持在线编辑
+var baseurl = 'http://cvbox.sinaapp.com/'; // 使用SAE托管简历数据
+// var baseurl = 'data.php'; // 使用本地文件托管简历数据，本地模式下，不支持在线编辑
 
 
 deerResume.config(['$routeProvider',
@@ -28,16 +28,16 @@ deerResume.controller('resumeCtrl', function ($scope,$http,storage) {
   var url = '';
   if( $scope.vpass && $scope.vpass.length > 3 )
     url = baseurl+"?a=show&domain="+encodeURIComponent(window.location)+"&vpass="+encodeURIComponent($scope.vpass);
-  else
+  else 
     url = baseurl+"?a=show&domain="+encodeURIComponent(window.location);
 
-
+  
   $http.get(url).success(function( data ){
       $scope.resume = data;
 
-    });
+    }); 
 
-
+  
   $scope.password = function( vpass )
   {
     $scope.vpass = vpass;
@@ -54,9 +54,9 @@ deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
   storage.bind($scope,'resume.content');
 
   var url = '';
-  if( $scope.apass && $scope.apass.length > 3)
+  if( $scope.vpass && $scope.vpass.length > 3 )
     url = baseurl+"?a=show&domain="+encodeURIComponent(window.location)+"&vpass="+encodeURIComponent($scope.vpass);
-  else
+  else 
     url = baseurl+"?a=show&domain="+encodeURIComponent(window.location);
 
   $http.get(url).success(function( data ){
@@ -65,7 +65,7 @@ deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
       $scope.resume.admin_password = $scope.apass;
       $scope.resume.view_password = $scope.wpass;
       if( oldcontent.length > 0  ) $scope.resume.content = oldcontent;
-    });
+    }); 
 
   $scope.save = function( item )
   {
@@ -83,21 +83,21 @@ deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
           $scope.apass = item.admin_password;
           $scope.wpass = item.view_password;
           ngNotify.set(data.notice,'success');
-
+          
         }
         else
         {
           ngNotify.set(data.error,'error');
         }
       }
-
+          
     );
   };
 
   // 请求云端数据，有三种情况：
   // 1 云端没有任何记录，这个时候显示默认模板
   // 2 云端已经存在数据，且设置有阅读密码，这时候提示输入密码
-
+  
   // 右上角留入口
 
 
@@ -126,7 +126,7 @@ function post(path, params, method) {
 
     for(var key in params) {
         if(params.hasOwnProperty(key)) {
-
+            
             var hiddenField = jQuery('<input/>', {
             'type':'hidden' ,
             'name':key,
@@ -153,7 +153,7 @@ function pdf()
   };
 
   doc.fromHTML($('#resume_body').get(0), 15, 15, {
-    'width': 170,
+    'width': 170, 
     'elementHandlers': specialElementHandlers
   });
 
