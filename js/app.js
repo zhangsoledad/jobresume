@@ -7,16 +7,16 @@ var baseurl = 'data.php'; // 使用本地文件托管简历数据，本地模式
 deerResume.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      when('/admin', {
+      when('#/admin', {
         templateUrl: 'admin.html',
         controller: 'adminCtrl'
       }).
-      when('/resume', {
+      when('#/resume', {
         templateUrl: 'resume.html',
         controller: 'resumeCtrl'
       }).
       otherwise({
-        redirectTo: '/resume'
+        redirectTo: '#/resume'
       });
   }]);
 
