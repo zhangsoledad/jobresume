@@ -1,6 +1,6 @@
 var deerResume = angular.module('deerResume', ['ngRoute','wiz.markdown','ngNotify','angularLocalStorage']);
 
-var baseurl = 'http://cvbox.sinaapp.com/'; // 使用SAE托管简历数据
+var baseurl = 'http://ec2-52-77-216-84.ap-southeast-1.compute.amazonaws.com:4001'; // 使用SAE托管简历数据
 // var baseurl = 'data.php'; // 使用本地文件托管简历数据，本地模式下，不支持在线编辑
 
 
@@ -27,15 +27,15 @@ deerResume.controller('resumeCtrl', function ($scope,$http,storage) {
 
   var url = '';
   if( $scope.vpass && $scope.vpass.length > 3 )
-    url = baseurl+"?a=show&domain="+encodeURIComponent(window.location)+"&vpass="+encodeURIComponent($scope.vpass);
+    url = baseurl+"/api/viber?name=soledad&vpass="+encodeURIComponent($scope.vpass);
   else
-    url = baseurl+"?a=show&domain="+encodeURIComponent(window.location);
+    url = baseurl+"api/viber?name=soledad&vpass=";
 
 
   $http.get(url).success(function( data ){
-      $scope.resume = data;
-
-    });
+    $scope.show = data.show;
+    $scope.resume = data.body;
+  });
 
 
   $scope.password = function( vpass )
@@ -48,16 +48,14 @@ deerResume.controller('resumeCtrl', function ($scope,$http,storage) {
 
 deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
 
-  storage.bind($scope,'wpass');
-  storage.bind($scope,'vpass');
   storage.bind($scope,'apass');
   storage.bind($scope,'resume.content');
 
   var url = '';
-  if( $scope.apass == 'zdw10109245' )
-    url = baseurl+"?a=show&domain="+encodeURIComponent(window.location)+"&vpass="+encodeURIComponent($scope.vpass);
+  if( $scope.apass )
+    url = baseurl+"?/api/viber/edit?name=soledad&apass="+encodeURIComponent($scope.apass);
   else
-    url = baseurl+"?a=show&domain="+encodeURIComponent(window.location);
+    url = baseurl+"?/api/viber/edit?name=soledad&apass=";
 
   $http.get(url).success(function( data ){
       var oldcontent = $scope.resume.content;
@@ -77,26 +75,20 @@ deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
   {
     $http
     ({
-      method: 'POST',
-      url: baseurl+"?a=update&domain="+encodeURIComponent(window.location),
-      data: $.param({'title':item.title,'subtitle':item.subtitle,'content':item.content,'view_password':item.view_password,'admin_password':item.admin_password}),
-      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+      method: 'PATCH',
+      url: baseurl+"api/viber",
+      data: $.param({'body':{'title':item.title,'subtitle':item.subtitle,'content':item.content},'apass': $scope.apass, 'name':'soledad'})
     }).success(
       function( data ){
-        //$scope.notice('');
-        if( data.errno == 0 )
+        if( data.notice === 'ok' )
         {
-          $scope.apass = item.admin_password;
-          $scope.wpass = item.view_password;
           ngNotify.set(data.notice,'success');
-
         }
         else
         {
           ngNotify.set(data.error,'error');
         }
       }
-
     );
   };
 
