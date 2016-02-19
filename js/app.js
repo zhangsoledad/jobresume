@@ -82,7 +82,7 @@ deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
     $http
     ({
       method: 'PATCH',
-      url: baseurl+"api/viber",
+      url: baseurl+"/api/viber",
       data: $.param({'body':{'title':item.title,'subtitle':item.subtitle,'content':item.content},'apass': $scope.apass, 'name':'soledad'})
     }).success(
       function( data ){
