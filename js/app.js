@@ -79,23 +79,18 @@ deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
 
   $scope.save = function( item )
   {
-    $http
-    ({
-      method: 'PATCH',
-      url: baseurl+"/api/viber",
-      data: $.param({'body':{'title':item.title,'subtitle':item.subtitle,'content':item.content},'apass': $scope.apass, 'name':'soledad'})
-    }).success(
-      function( data ){
-        if( data.notice === 'ok' )
-        {
-          ngNotify.set(data.notice,'success');
-        }
-        else
-        {
-          ngNotify.set(data.error,'error');
-        }
+    var param = $.param({'body': {'title':item.title, 'subtitle': item.subtitle, 'content':item.content},  'apass': $scope.apass, 'name':'soledad'});
+    var url = baseurl+"/api/viber";
+    $http.put(url, param).success(function( data ){
+      if( data.notice === 'ok' )
+      {
+        ngNotify.set(data.notice,'success');
       }
-    );
+      else
+      {
+        ngNotify.set(data.error,'error');
+      }
+    }
   };
 
   // 请求云端数据，有三种情况：
