@@ -33,8 +33,12 @@ deerResume.controller('resumeCtrl', function ($scope,$http,storage) {
 
 
   $http.get(url).success(function( data ){
-    $scope.show = data.show;
-    $scope.resume = data.body;
+    if(data.show == 0){
+      $scope.show = data.show;
+    }else {
+      $scope.show = data.show;
+      $scope.resume = data.data.body;
+    }
   });
 
 
@@ -52,18 +56,20 @@ deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
   storage.bind($scope,'resume.content');
 
   var url = '';
-  if( $scope.apass )
+  if( $scope.apass &&  $scope.resume.content.length > 0 )
     url = baseurl+"?/api/viber/edit?name=soledad&apass="+encodeURIComponent($scope.apass);
   else
     url = baseurl+"?/api/viber/edit?name=soledad&apass=";
 
   $http.get(url).success(function( data ){
-      var oldcontent = $scope.resume.content;
-      $scope.resume = data;
-      $scope.resume.admin_password = $scope.apass;
-      $scope.resume.view_password = $scope.wpass;
-      if( oldcontent.length > 0  ) $scope.resume.content = oldcontent;
-    });
+    var oldcontent = $scope.resume.content;
+    if(data.show == 0){
+      $scope.show = data.show;
+    }else {
+      $scope.show = data.show;
+      $scope.resume = data.data.body;
+    }
+  });
 
   $scope.admin_password = function( apass )
   {
