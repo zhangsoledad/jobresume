@@ -55,7 +55,7 @@ deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
   storage.bind($scope,'resume.content');
 
   var url = '';
-  if( $scope.apass &&  $scope.resume.content.length > 0 )
+  if( $scope.apass )
     url = baseurl+"/api/viber/edit?name=soledad&apass="+encodeURIComponent($scope.apass);
   else
     url = baseurl+"/api/viber/edit?name=soledad&apass=";
