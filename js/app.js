@@ -20,13 +20,6 @@ deerResume.config(['$routeProvider',
       });
 }]);
 
-deerResume.config(['$httpProvider', function($httpProvider) {
-  $httpProvider.defaults.useXDomain = true;
-  $httpProvider.defaults.headers.common = 'Content-Type: application/json';
-  delete $httpProvider.defaults.headers.common['X-Requested-With'];
-}]);
-
-
 deerResume.controller('resumeCtrl', function ($scope,$http,storage) {
 
   storage.bind($scope,'vpass');
@@ -87,7 +80,7 @@ deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
   {
     var param = $.param({'body': {'title':item.title, 'subtitle': item.subtitle, 'content':item.content},  'apass': $scope.apass, 'name':'soledad'});
     var url = baseurl+"/api/viber";
-    $http.put(url, param).success(function( data ){
+    $http.put(url, param, {withCredentials: true}).success(function( data ){
       if( data.notice === 'ok' )
       {
         ngNotify.set(data.notice,'success');
