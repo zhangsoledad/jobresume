@@ -78,9 +78,13 @@ deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
 
   $scope.save = function( item )
   {
-    var param = $.param({'body': {'title':item.title, 'subtitle': item.subtitle, 'content':item.content},  'apass': $scope.apass, 'name':'soledad'});
-    var url = baseurl+"/api/viber";
-    $http.put(url, param).success(function( data ){
+    $http
+    ({
+      method: 'PUT',
+      url: baseurl+"/api/viber",
+      data: $.param({'body': {'title':item.title, 'subtitle': item.subtitle, 'content':item.content},  'apass': $scope.apass, 'name':'soledad'}),
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+    }).success(function( data ){
       if( data.notice === 'ok' )
       {
         ngNotify.set(data.notice,'success');
