@@ -80,7 +80,7 @@ deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
   {
     var param = $.param({'body': {'title':item.title, 'subtitle': item.subtitle, 'content':item.content},  'apass': $scope.apass, 'name':'soledad'});
     var url = baseurl+"/api/viber";
-    $http.put(url, param, {withCredentials: true}).success(function( data ){
+    $http.put(url, param).success(function( data ){
       if( data.notice === 'ok' )
       {
         ngNotify.set(data.notice,'success');
