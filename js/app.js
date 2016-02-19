@@ -90,7 +90,7 @@ deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
       {
         ngNotify.set(data.error,'error');
       }
-    }
+    });
   };
 
   // 请求云端数据，有三种情况：
