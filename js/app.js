@@ -57,9 +57,9 @@ deerResume.controller('adminCtrl', function ($scope,$http,storage,ngNotify) {
 
   var url = '';
   if( $scope.apass &&  $scope.resume.content.length > 0 )
-    url = baseurl+"?/api/viber/edit?name=soledad&apass="+encodeURIComponent($scope.apass);
+    url = baseurl+"/api/viber/edit?name=soledad&apass="+encodeURIComponent($scope.apass);
   else
-    url = baseurl+"?/api/viber/edit?name=soledad&apass=";
+    url = baseurl+"/api/viber/edit?name=soledad&apass=";
 
   $http.get(url).success(function( data ){
     var oldcontent = $scope.resume.content;
@@ -140,8 +140,6 @@ function post(path, params, method) {
             form.appendChild(hiddenField);
          }
     }
-
-
 
     form.submit();
 }
