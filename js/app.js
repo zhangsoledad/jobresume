@@ -28,7 +28,7 @@ deerResume.controller('resumeCtrl', function ($scope,$http,storage) {
   if( $scope.vpass && $scope.vpass.length > 3 )
     url = baseurl+"/api/viber?name=soledad&vpass="+encodeURIComponent($scope.vpass);
   else
-    url = baseurl+"api/viber?name=soledad&vpass=";
+    url = baseurl+"/api/viber?name=soledad&vpass=";
 
 
   $http.get(url).success(function( data ){
